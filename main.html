@@ -87,7 +87,7 @@ justify-content: center;
     x1.src = image_data_url;
     //    const x1 = new Image(); // Create new img element
     //     x1.src = img;
-        const prediction = await model.predict(x1);
+        const prediction = await model.predict(webcam.canvas);
         // console.log(prediction)
         for (let i = 0; i < maxPredictions; i++) {
             // console.log(labelContainer.childNodes[i].innerHTML)
