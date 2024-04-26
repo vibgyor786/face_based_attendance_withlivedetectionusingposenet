@@ -1,1 +1,1 @@
-https://vibgyor786.github.io/technoscan-web/
+https://vibgyor786.github.io/face_based_attendance_withlivedetectionusingposenet/
