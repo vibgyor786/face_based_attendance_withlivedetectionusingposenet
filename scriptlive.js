@@ -5,7 +5,7 @@ let model, webcam, labelContainer, maxPredictions;
 let canvas;
 let firsttime=1
 let maxi=0.1,mini=Number.MAX_VALUE
-async function setup() {
+ function setup() {
   createCanvas(width, height);
   video = createCapture(VIDEO);
   video.size(width, height);
@@ -37,7 +37,7 @@ c.height=200
   // Hide the video element, and just show the canvas
   video.hide();
 }
-
+setup()
 function modelReady() {
   select('#status').html('Model Loaded');
 }
@@ -104,15 +104,16 @@ function drawKeypoints()  {
 }
 
 function capture(){
-  console.log('hi')
+  // console.log('hi')
   let c=document.getElementById('defaultCanvas0')
   let image_data_url = c.toDataURL('image/jpeg');
 	   localStorage.setItem("img", image_data_url);
     //  console.log(maxi-mini)
+   
     if(maxi-mini>0.5){
-      window.location.href = "main.html";
+      window.location.href = "index.html";
     }else{
       alert("Person should be physically available")
     }
-    // 
+    
 }
