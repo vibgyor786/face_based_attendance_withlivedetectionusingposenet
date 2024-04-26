@@ -53,10 +53,11 @@ justify-content: center;
         // Convenience function to setup a webcam
         const flip = true; // whether to flip the webcam
         webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+        // console.log(webcam)
         await webcam.setup(); // request access to the webcam
         await webcam.play();
         window.requestAnimationFrame(loop);
-
+        webcam.canvas.id="xw"
         // append elements to the DOM
         document.getElementById("webcam-container").appendChild(webcam.canvas);
         labelContainer = document.getElementById("label-container");
@@ -77,12 +78,37 @@ justify-content: center;
     // run the webcam image through the image model
     async function predict() {
         // predict can take in an image, video or canvas html element
+
+
+
+//         let canvas = document.getElementById("xw");
+
+//   let ctx = canvas.getContext("2d");
+// //   canvas.width = 50;
+// //   canvas.height = 50;
+// console.log(ctx)
+//   let srcImg = document.getElementById("sof");
+//   ctx.drawImage(srcImg, 0, 0, ctx.canvas.width, ctx.canvas.height);
+//   let imgData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+//   let pixels = imgData.data;
+//   for (var i = 0; i < pixels.length; i += 4) {
+
+//     let lightness = parseInt((pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3);
+
+//     pixels[i] = lightness;
+//     pixels[i + 1] = lightness;
+//     pixels[i + 2] = lightness;
+//   }
+//   ctx.putImageData(imgData, 0, 0);
+
+
+
         const prediction = await model.predict(webcam.canvas);
         // console.log(prediction)
         for (let i = 0; i < maxPredictions; i++) {
             // console.log(labelContainer.childNodes[i].innerHTML)
             // labelContainer.childNodes[i].innerHTML
-            if( prediction[i].probability>=0.96){
+            if( prediction[i].probability>=0.99){
 
                 if(name==prediction[i].className){
                     cnt++;
