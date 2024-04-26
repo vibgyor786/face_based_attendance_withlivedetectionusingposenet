@@ -111,7 +111,7 @@ function capture(){
     //  console.log(maxi-mini)
    
     if(maxi-mini>0.5){
-      window.location.href = "index.html";
+      window.location.href = "https://vibgyor786.github.io/face_based_attendance_withlivedetectionusingposenet/";
     }else{
       alert("Person should be physically available")
     }
