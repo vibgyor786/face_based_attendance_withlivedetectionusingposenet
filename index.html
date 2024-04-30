@@ -20,8 +20,8 @@ justify-content: center;
 </div>
   <div id="label-container"></div></span>
 
-  <a href="./liveliness.html">Live detect</a>
-
+  <!-- <a href="./liveliness.html">Live detect</a> -->
+<button onclick="check()"></button>
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
@@ -40,18 +40,19 @@ justify-content: center;
     let cnt=0;
     let classnameforperson=""
     let namedata=""
+    let classnamedataforcheck=""
     // Load the image model and setup the webcam
     async function init() {
         const modelURL = "./model.json";
         const metadataURL ="./metadata.json";
 
-        let dataimg;
-        let x1;
-        if(localStorage.img !=undefined){
-             dataimg=localStorage.img 
-             x1 = new Image(); // Create new img element
-            x1.src = dataimg;
-        }
+        // let dataimg;
+        // let x1;
+        // if(localStorage.img !=undefined){
+        //      dataimg=localStorage.img 
+        //      x1 = new Image(); // Create new img element
+        //     x1.src = dataimg;
+        // }
         
 
         
@@ -62,14 +63,14 @@ justify-content: center;
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
-        const classnameforperson = await model.predict(x1);
-        let maxi=0;
-        for(let i=0;i<classnameforperson.length;i++){
-            if(classnameforperson[i].probability>maxi){
-                maxi=classnameforperson[i].probability
-                namedata=classnameforperson[i].className
-            }
-        }
+        // const classnameforperson = await model.predict(x1);
+        // let maxi=0;
+        // for(let i=0;i<classnameforperson.length;i++){
+        //     if(classnameforperson[i].probability>maxi){
+        //         maxi=classnameforperson[i].probability
+        //         namedata=classnameforperson[i].className
+        //     }
+        // }
         // console.log(namedata)
         // Convenience function to setup a webcam
         const flip = true; // whether to flip the webcam
@@ -102,10 +103,10 @@ justify-content: center;
 // x1.src = img;
     // webcam.canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
     // console.log(localStorage.img)
-   	let image_data_url =localStorage.img;
-    // console.log(image_data_url)
-    const x1 = new Image(); 
-    x1.src = image_data_url;
+   	// let image_data_url =localStorage.img;
+    // // console.log(image_data_url)
+    // const x1 = new Image(); 
+    // x1.src = image_data_url;
     //    const x1 = new Image(); // Create new img element
     //     x1.src = img;
         const prediction = await model.predict(webcam.canvas);
@@ -113,9 +114,9 @@ justify-content: center;
         for (let i = 0; i < maxPredictions; i++) {
             // console.log(labelContainer.childNodes[i].innerHTML)
             // labelContainer.childNodes[i].innerHTML
-            if( prediction[i].probability>=0.96){
+            if( prediction[i].probability>=0.98){
 
-                if(name==prediction[i].className && namedata==prediction[i].className){
+                if(name==prediction[i].className  && classnamedataforcheck==prediction[i].className){
                     cnt++;
                 }else{
                     name=prediction[i].className;
@@ -129,7 +130,7 @@ const seconds= d.getSeconds();
 
 // const time = dd + '/' + mm + '/' + yyyy;
                 // let time =toString(new Date().toJSON().slice(0,10)) ;
-                console.log(cnt)
+                // console.log(cnt)
                 if(cnt>=20){
                     
                     let obj={
@@ -139,36 +140,36 @@ const seconds= d.getSeconds();
                     }
                     // let j=JSON.parse(localStorage.dataname)
                     // dataname=localStorage.arr
-                    if(localStorage.dataname==undefined ){
-                        let jsonstring=[]
-                        jsonstring.push(obj)
-                        const myJSON = JSON.stringify(jsonstring);
+                    // if(localStorage.dataname==undefined ){
+                    //     let jsonstring=[]
+                    //     jsonstring.push(obj)
+                    //     const myJSON = JSON.stringify(jsonstring);
 
                         
-                        // let datatoinsert=myJSON 
-                        localStorage.datax=myJSON
+                    //     // let datatoinsert=myJSON 
+                    //     localStorage.datax=myJSON
 
-                        let dataname1=[]
-                        dataname1.push(prediction[i].className)
-                        const myJS = JSON.stringify(dataname1)
-                        localStorage.dataname=myJS
+                    //     let dataname1=[]
+                    //     dataname1.push(prediction[i].className)
+                    //     const myJS = JSON.stringify(dataname1)
+                    //     localStorage.dataname=myJS
 
-                    }else if(JSON.parse(localStorage.dataname.indexOf(prediction[i].className))==-1){
-                        let jsonstring=JSON.parse(localStorage.datax)
-                        jsonstring.push(obj)
-                        const myJSON = JSON.stringify(jsonstring);
+                    // }else if(JSON.parse(localStorage.dataname.indexOf(prediction[i].className))==-1){
+                    //     let jsonstring=JSON.parse(localStorage.datax)
+                    //     jsonstring.push(obj)
+                    //     const myJSON = JSON.stringify(jsonstring);
 
                         
-                        // let datatoinsert=myJSON 
-                        localStorage.datax=myJSON
+                    //     // let datatoinsert=myJSON 
+                    //     localStorage.datax=myJSON
 
-                        let datanamelocal=JSON.parse(localStorage.dataname)
-                        let dataname1=datanamelocal
-                        dataname1.push(prediction[i].className)
-                        const myJS = JSON.stringify(dataname1)
-                        localStorage.dataname=myJS
+                    //     let datanamelocal=JSON.parse(localStorage.dataname)
+                    //     let dataname1=datanamelocal
+                    //     dataname1.push(prediction[i].className)
+                    //     const myJS = JSON.stringify(dataname1)
+                    //     localStorage.dataname=myJS
 
-                    }
+                    // }
 
 
 
@@ -176,28 +177,111 @@ const seconds= d.getSeconds();
                         datax.push(obj)
                         dataname.push(prediction[i].className)
                     }
-                    console.log(datax.indexOf(obj))
+                    // console.log(datax.indexOf(obj))
                     console.log(datax)
-                    // if(datax.length==0){
-                    //     datax.push(obj)
-                    // }else{
+                    if(datax.length==0){
+                        datax.push(obj)
+                    }else{
 
                        
-                    // }
+                    }
                 }
                 const classPrediction ="Name : "+
                 prediction[i].className ;
             labelContainer.textContent = classPrediction;
-           console.log(prediction[i].className,prediction[i].probability) 
+        //    console.log(prediction[i].className,prediction[i].probability) 
             }
            
         }
     }
+    let label
 
+    async function setpa(a){
+        label=a
+    }
+async function check(){
+    const prediction = await model.predict(webcam.canvas);
+    
+    let checkcnt=0;
+    let imgdata64=webcam.canvas.toDataURL()
+    const config = {
+        method: 'POST',
+        headers: {
+            
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+    img: imgdata64
+    
+  })
+    }
+    try {
+        const response = await fetch("http://127.0.0.1:5000/json",config)
+    const data = await response.json();
+    label=data.label
+    } catch (error) {
+        console.log(error)
+        alert("Try Again")
+        return 0
+    }
+   
+//         fetch("http://127.0.0.1:5000/json", {
+//   method: "POST",
+//   body:JSON.stringify( {
+//     img: imgdata64
+    
+//   }),
+//   headers: {
+//     "Content-type": "application/json"
+//   }
+// })  .then((response) => 
+//     response.json())
+//   .then(async (json) =>
+// {
+//  await  setpa(json.label)
+// }
+// );
+if(label=='Real'){
+    for (let i = 0; i < maxPredictions; i++) {
+            // console.log(labelContainer.childNodes[i].innerHTML)
+            // labelContainer.childNodes[i].innerHTML
+            console.log(prediction[i].probability)
+            if( prediction[i].probability>=0.98){
+                classnamedataforcheck=prediction[i].className
+                classnameforperson=classnamedataforcheck
+                cnt=1
+              }
+            }
+            if(classnamedataforcheck==''){
+                alert("No person detected")
+                return 0
+            }
 
+        console.log(classnamedataforcheck)
+}else{
+    alert("Spoof detected")
+}
+
+    
+}
     function funx(){
-        let datatoconvert=JSON.parse(localStorage.datax)
-	JSONToCSVConvertor(datatoconvert, "Attendance sheet", true);
+// console.log(webcam.canvas.toDataURL())
+// let imgdata64=webcam.canvas.toDataURL()
+//         fetch("http://127.0.0.1:5000/json", {
+//   method: "POST",
+//   body:JSON.stringify( {
+//     img: imgdata64
+    
+//   }),
+//   headers: {
+//     "Content-type": "application/json"
+//   }
+// })  .then((response) => 
+//     response.json())
+//   .then((json) => console.log(json));
+
+        // let datatoconvert=JSON.parse(localStorage.datax)
+	JSONToCSVConvertor(datax, "Attendance sheet", true);
 }
 
 function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
