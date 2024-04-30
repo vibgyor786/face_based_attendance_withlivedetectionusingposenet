@@ -216,7 +216,7 @@ async function check(){
   })
     }
     try {
-        const response = await fetch("http://127.0.0.1:5000/json",config)
+        const response = await fetch("http://192.168.1.195:5000/json",config)
     const data = await response.json();
     label=data.label
     } catch (error) {
